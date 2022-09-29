@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li>111</li>
+        <li>222</li>
+        <li>333</li>
+    </ul>
+    <script>
+        //1.记住列表的索引
+        //先获取页面中所有的li
+        var oli = document.querySelectorAll("li")
+        //for循环,拿到每一个li,绑好onclick事件,拿到索引
+        /* for(let i=0;i<oli.length;i++){
+            oli[i].onclick =function(){
+                console.log(i)
+            }
+        } */
+        for (var i = 0; i < oli.length; i++) {
+            oli[i].onclick = (function (index) {
+                return function () {
+                    console.log(1111,index)
+                }
+            })(i)//匿名自执行函数  符合闭包原则
+        }
+
+
+
+        //2.百度jsonp案例优化--函数防抖
+    </script>
+</body>
+
+</html>

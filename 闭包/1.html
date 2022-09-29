@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 
+        函数内部返回一个函数,被外界所引用
+        这个内部函数就不会被销毁回收
+        内部函数所用到的外部函数变量也不会被销毁
+         */
+        function outer() {
+            var name = "makima"//这个name原本要被销毁,但内部函数调用了这个变量所以他不会被销毁
+            var age = 100 //这个就会被销毁
+            //函数内部返回一个函数,被外界所引用
+            return function () {
+                return name + "1111"
+            }
+        }
+        var func = outer()
+        console.log(func())
+        func()
+        /* 
+        优点:让临时变量永驻内存
+        缺点:临时变量太多了,内存泄漏  可以赋值为空解决 func = null
+        */
+
+        /* 为什么要存 */
+        /* fetch("http://www.a.com/aaa")
+        fetch("http://www.a.com/aaa")
+        fetch("http://www.b.com/bbb")
+        fetch("http://www.b.com/bbb")
+        fetch("http://www.c.com/ccc")
+        fetch("http://www.c.com/ccc") */
+
+        function FetchContainer(url){
+            return function(path){
+                return fetch(url+path)
+            }
+        }
+        
+        var fetcha = FetchContainer("http://www.a.com/aaa")
+        //当fetcha要传这些值
+        fetcha("/aaa").then(res=>res.json()).then(res=>console.log(res))
+        fetcha("/bbb").then(res=>res.json()).then(res=>console.log(res))
+        fetcha("/ccc").then(res=>res.json()).then(res=>console.log(res))
+        fetcha = null
+        var fetchb = FetchContainer("http://www.b.com/bbb")
+        (res)
+        fetchb("/aaa").then(res=>res.json()).then(res=>console.log(res))
+        fetchb("/bbb").then(res=>res.json()).then(res=>console.log(res))
+        fetchb("/ccc").then(res=>res.json()).then(res=>console.log(res))
+        fetchb = null
+        var fetchc = FetchContainer("http://www.c.com/ccc")
+        
+        fetchc("/aaa").then(res=>res.json()).then(res=>console.log(res))
+        fetchc("/bbb").then(res=>res.json()).then(res=>console.log(res))
+        fetchc("/ccc").then(res=>res.json()).then(res=>console.log(res))
+        fetchc = null
+        //闭包应用:函数柯里化
+        </script>
+</body>
+
+</html>

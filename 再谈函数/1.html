@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 这里的调用函数除了函数定义阶段栈区和堆区外,在函数调用阶段还有 一个区域,函数里的值var name = "makima"
+            console.log(name)会存在里面,在你调用函数结束后打印出来就会消失*/
+        /* function test() {
+            var name = "makima"
+            console.log(name)
+        }
+        test() */
+
+        /* 
+        函数有返回值,而且返回值必须是复杂类型,而且要赋值的外面的变量
+        */
+       //这里name会被调用结束后函数调用区删除,而obj符合上方条件不会删除
+       function test(){
+        var name = "makima"
+        console.log(name)
+        var obj = {
+            a:1,
+            b:2
+        }
+        return obj
+       }
+       var obj1 = test()
+       //这里obj1不等于obj2,每次创建都是一个新对象
+       var obj2 = test()
+       //要这样子删除
+       obj1 = null
+       obj2 = null
+    </script>
+</body>
+
+</html>

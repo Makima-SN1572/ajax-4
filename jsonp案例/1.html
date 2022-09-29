@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" name="" id="mysearch">
+    <ul id="list"></ul>
+    <script>
+        //https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=36557,36884,34812,37403,36786,26350&wd=a&req=2&csor=1&cb=jQuery110201714904662808565_1664449135928&_=1664449135929
+        mysearch.oninput = function (evt) {
+            console.log(evt.target.value)
+            //如果evt.target.value为空字符串就return
+            if (!evt.target.value) {
+                list.innerHTML = ""
+                return
+            }
+
+            var oscript = document.createElement("script")
+            oscript.src = `https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=36557,36884,34812,37403,36786,26350&wd=${evt.target.value}&req=2&csor=1&cb=test`
+            document.body.appendChild(oscript)
+            oscript.onload = function () {
+                oscript.remove()
+            }
+
+        }
+
+        function test(obj) {
+            console.log(obj.g)
+            list.innerHTML = obj.g.map(item =>
+                `<li>${item.q}</li>`
+            ).join("")
+        }
+        /*
+          1. cors 
+          2. 反向代理
+        */
+
+    </script>
+</body>
+
+</html>
